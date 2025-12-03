@@ -1,12 +1,21 @@
-import { Container } from 'react-bootstrap'
+import NavBar from './components/NavBar'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
-    <>
-      <Container>
-        <h1>Weather Dashboard</h1>
-      </Container>
-    </>
+    <BrowserRouter>
+      <NavBar/>
+      <main className='container'>
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/about' element={<AboutPage/>}/>
+          <Route path='/profile' element={<ProfilePage/>}/>
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 
