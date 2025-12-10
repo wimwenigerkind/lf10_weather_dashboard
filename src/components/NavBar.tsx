@@ -20,10 +20,11 @@ function NavBar({setSearchTerm, searchIsLoading, searchResults, errorMessage}: N
         <div className="d-flex flex-column">
           <NavLink to="/" className="navbar-brand">Weather Dashboard</NavLink>
           {selectedCity && (
-            <span>Selected City:
+            <div className="d-flex gap-2">
+              <span>Selected City:</span>
               <Badge bg="primary">{selectedCity.name}</Badge>
               <CloseButton onClick={() => setSelectedCity(null)}></CloseButton>
-            </span>
+            </div>
           )}
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
