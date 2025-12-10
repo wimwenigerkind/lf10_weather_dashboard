@@ -12,6 +12,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
   useEffect(() => {
     const fetchWeatherForecast = async () => {
       setErrorMessage('');
+      setChartData([]);
       try {
         const result = await getWeatherForecast(city.latitude, city.longitude)
         const weatherForecast = result.time.map((date: string, index: number) => ({
@@ -26,7 +27,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
     }
 
     fetchWeatherForecast()
-  }, [city.latitude, city.longitude])
+  }, [city.id, city.latitude, city.longitude])
   return (
     <>
       {hasError ? (
