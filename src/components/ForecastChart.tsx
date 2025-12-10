@@ -41,7 +41,10 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
             <XAxis dataKey="date"/>
             <YAxis width="auto"/>
-            <Tooltip/>
+            <Tooltip
+              contentStyle={{ backgroundColor: 'white', border: '1px solid #ccc' }}
+              formatter={(value: number) => `${value}°C`}
+            />
             <Legend/>
             <Line type="monotone" dataKey="minTemp" stroke="#8884d8"/>
             <Line type="monotone" dataKey="maxTemp" stroke="#82ca9d"/>
