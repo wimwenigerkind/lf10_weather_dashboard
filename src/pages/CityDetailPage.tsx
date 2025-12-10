@@ -1,4 +1,4 @@
-import {useCity} from "../contexts/CityContext.tsx";
+import {useCity} from "../hooks/useCity";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 
 function CityHeader({city}: { city: citySearchResult }) {

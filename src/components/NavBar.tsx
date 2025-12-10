@@ -2,7 +2,7 @@ import {Badge, CloseButton, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import SearchForm from "./SearchForm.tsx";
 import type {citySearchResult} from "../types/citySearchResult";
-import {useCity} from "../contexts/CityContext.tsx";
+import {useCity} from "../hooks/useCity";
 
 interface NavBarProps {
   setSearchTerm: (value: string) => void;

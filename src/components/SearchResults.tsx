@@ -1,7 +1,7 @@
 import {ListGroup} from "react-bootstrap";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 import SearchResultItem from "./SearchResultItem.tsx";
-import {useCity} from "../contexts/CityContext.tsx";
+import {useCity} from "../hooks/useCity";
 
 interface SearchResultsProps {
   searchResults: citySearchResult[]

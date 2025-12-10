@@ -1,12 +1,14 @@
-import {createContext, type ReactNode, useContext, useEffect, useState} from "react";
+import {createContext, type ReactNode, useEffect, useState} from "react";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 
-type CityContextType = {
+export type CityContextType = {
   selectedCity: citySearchResult | undefined;
   setSelectedCity: (value: citySearchResult | null) => void;
 }
 
 const CityContext = createContext<CityContextType | undefined>(undefined);
+
+export { CityContext };
 
 export function CityProvider({children}: { children: ReactNode }) {
   const [selectedCity, setSelectedCity] = useState(() => {
@@ -27,12 +29,4 @@ export function CityProvider({children}: { children: ReactNode }) {
       {children}
     </CityContext.Provider>
   );
-}
-
-export function useCity() {
-  const context = useContext(CityContext);
-  if (context === undefined) {
-    throw Error("useCity must be used within a CityProvider")
-  }
-  return context;
 }
