@@ -3,7 +3,7 @@ import type {citySearchResult} from "../types/citySearchResult.ts";
 
 type CityContextType = {
   selectedCity: citySearchResult | undefined;
-  setSelectedCity: (value: citySearchResult) => void;
+  setSelectedCity: (value: citySearchResult | null) => void;
 }
 
 const CityContext = createContext<CityContextType | undefined>(undefined);
@@ -17,6 +17,8 @@ export function CityProvider({children}: { children: ReactNode }) {
   useEffect(() => {
     if (selectedCity) {
       localStorage.setItem('selectedCity', JSON.stringify(selectedCity))
+    } else {
+      localStorage.removeItem('selectedCity')
     }
   }, [selectedCity]);
 

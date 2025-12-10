@@ -1,4 +1,4 @@
-import {Badge, Container, Nav, Navbar} from "react-bootstrap";
+import {Badge, CloseButton, Container, Nav, Navbar} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import SearchForm from "./SearchForm.tsx";
 import type {citySearchResult} from "../types/citySearchResult";
@@ -12,7 +12,7 @@ interface NavBarProps {
 }
 
 function NavBar({setSearchTerm, searchIsLoading, searchResults, errorMessage}: NavBarProps) {
-  const {selectedCity} = useCity()
+  const {selectedCity, setSelectedCity} = useCity()
 
   return (
     <Navbar expand='lg' className="bg-body-tertiary">
@@ -20,7 +20,10 @@ function NavBar({setSearchTerm, searchIsLoading, searchResults, errorMessage}: N
         <div className="d-flex flex-column">
           <NavLink to="/" className="navbar-brand">Weather Dashboard</NavLink>
           {selectedCity && (
-            <span>Selected City: <Badge bg="primary">{selectedCity.name}</Badge></span>
+            <span>Selected City:
+              <Badge bg="primary">{selectedCity.name}</Badge>
+              <CloseButton onClick={() => setSelectedCity(null)}></CloseButton>
+            </span>
           )}
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
