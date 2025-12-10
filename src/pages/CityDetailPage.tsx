@@ -1,29 +1,6 @@
 import {useCity} from "../hooks/useCity";
 import type {citySearchResult} from "../types/citySearchResult.ts";
-
-function CityHeader({city}: { city: citySearchResult }) {
-  return (
-    <>
-      <h1>{city.name}</h1>
-      <div className="mb-4 d-flex justify-content-between">
-        <div className="row">
-          <span>{city.country}, {city.country_code}</span>
-          <span>{city.latitude}, {city.longitude}</span>
-        </div>
-        <div>
-          <div className="row">
-            <span className="col">Population:</span>
-            <span className="col text-end">{city.population}</span>
-          </div>
-          <div className="row">
-            <span className="col">Timezone:</span>
-            <span className="col text-end">{city.timezone}</span>
-          </div>
-        </div>
-      </div>
-    </>
-  )
-}
+import CityHeader from "../components/CityHeader.tsx";
 
 function CityInfo({city}: { city: citySearchResult }) {
   return (
