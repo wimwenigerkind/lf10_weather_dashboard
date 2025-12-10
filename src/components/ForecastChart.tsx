@@ -1,34 +1,46 @@
 import {useEffect, useState} from "react";
 import {getWeatherForecast} from "../services/weatherService.ts";
 import type {citySearchResult} from "../types/citySearchResult.ts";
+import {CartesianGrid, Line, LineChart, XAxis, YAxis} from "recharts";
 
 export default function ForecastChart({city}: { city: citySearchResult }) {
-  const [weatherForecastIsLoading, setWeatherForecastIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [chartData, setChartData] = useState<Array<{ name: string, minTemp: number, maxTemp: number }>>([]);
 
-  console.log(weatherForecastIsLoading)
-  console.log(errorMessage)
+  const hasError = errorMessage.length > 0;
 
   useEffect(() => {
     const fetchWeatherForecast = async () => {
-      setWeatherForecastIsLoading(true);
       setErrorMessage('');
       try {
         const result = await getWeatherForecast(city.latitude, city.longitude)
-        console.log(result);
+        const weatherForecast = result.time.map((date: string, index: number) => ({
+          date: new Date(date).toLocaleDateString('de-DE', {month: 'short', day: 'numeric'}),
+          minTemp: result.temperature_2m_min[index],
+          maxTemp: result.temperature_2m_max[index]
+        }));
+        setChartData(weatherForecast);
       } catch (error) {
         setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
-      } finally {
-        setWeatherForecastIsLoading(false)
       }
     }
 
     fetchWeatherForecast()
-  })
-
+  }, [city.latitude, city.longitude])
   return (
     <>
-      <span>Chart</span>
+      {hasError ? (
+        <span className="text-danger">{errorMessage}</span>
+      ) : (
+        <LineChart style={{width: '100%', aspectRatio: 1.618, maxWidth: 800, margin: 'auto'}} responsive
+                   data={chartData}>
+          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+          <XAxis dataKey="date"/>
+          <YAxis width="auto"/>
+          <Line type="monotone" dataKey="minTemp" stroke="#8884d8"/>
+          <Line type="monotone" dataKey="maxTemp" stroke="#82ca9d"/>
+        </LineChart>
+      )}
     </>
   )
 }
