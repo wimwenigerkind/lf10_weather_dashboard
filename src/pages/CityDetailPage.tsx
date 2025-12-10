@@ -1,14 +1,6 @@
 import {useCity} from "../hooks/useCity";
-import type {citySearchResult} from "../types/citySearchResult.ts";
 import CityHeader from "../components/CityHeader.tsx";
-
-function CityInfo({city}: { city: citySearchResult }) {
-  return (
-    <>
-      <span>Infos about the selected city: {city.name}</span>
-    </>
-  )
-}
+import CityInfo from "../components/CityInfo.tsx";
 
 function CityDetailPage() {
   const {selectedCity} = useCity()
