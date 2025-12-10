@@ -6,6 +6,7 @@ import ProfilePage from './pages/ProfilePage'
 import {useEffect, useState} from 'react'
 import {searchCities} from './services/geocodingService'
 import {useDebounce} from './hooks/useDebounce'
+import CityDetailPage from "./pages/CityDetailPage.tsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -52,6 +53,7 @@ function App() {
           <Route path='/' element={<HomePage/>}/>
           <Route path='/about' element={<AboutPage/>}/>
           <Route path='/profile' element={<ProfilePage/>}/>
+          <Route path='/city/:id' element={<CityDetailPage/>}/>
         </Routes>
       </main>
     </BrowserRouter>

@@ -32,6 +32,9 @@ function NavBar({setSearchTerm, searchIsLoading, searchResults, errorMessage}: N
           <Nav className="me-auto">
             <NavLink to="/about" className="nav-link">About</NavLink>
             <NavLink to="/profile" className="nav-link">Profile</NavLink>
+            {selectedCity && (
+              <NavLink to={`/city/${selectedCity.id}`} className="nav-link">{selectedCity?.name}</NavLink>
+            )}
           </Nav>
           <SearchForm setSearchTerm={setSearchTerm} searchIsLoading={searchIsLoading} searchResults={searchResults} errorMessage={errorMessage}/>
         </Navbar.Collapse>
