@@ -1,6 +1,7 @@
 import {ListGroup} from "react-bootstrap";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 import SearchResultItem from "./SearchResultItem.tsx";
+import {useCity} from "../contexts/CityContext.tsx";
 
 interface SearchResultsProps {
   searchResults: citySearchResult[]
@@ -8,6 +9,7 @@ interface SearchResultsProps {
 }
 
 function SearchResults({searchResults, errorMessage}: SearchResultsProps) {
+  const {setSelectedCity} = useCity()
   const showResults = searchResults.length > 0;
   const showErrors = errorMessage.length > 0
 
@@ -24,9 +26,7 @@ function SearchResults({searchResults, errorMessage}: SearchResultsProps) {
         {showResults && (
           <ListGroup>
             {searchResults.map((city) => (
-              <ListGroup.Item key={city.id} action onClick={() => {
-                console.log('Selected City: ', city)
-              }}>
+              <ListGroup.Item key={city.id} action onClick={() => setSelectedCity(city)}>
                 <SearchResultItem city={city}/>
               </ListGroup.Item>
             ))}
