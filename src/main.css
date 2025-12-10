@@ -1,3 +1,13 @@
 body {
   font-family: "JetBrains Mono", -apple-system,BlinkMacSystemFont,segoe ui,Roboto,Oxygen,Ubuntu,Cantarell,open sans,helvetica neue,sans-serif;
 }
+
+.search--results {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
