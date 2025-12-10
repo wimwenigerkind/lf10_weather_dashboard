@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {getWeatherForecast} from "../services/weatherService.ts";
 import type {citySearchResult} from "../types/citySearchResult.ts";
-import {CartesianGrid, Line, LineChart, XAxis, YAxis} from "recharts";
+import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 
 export default function ForecastChart({city}: { city: citySearchResult }) {
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,6 +41,8 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
             <XAxis dataKey="date"/>
             <YAxis width="auto"/>
+            <Tooltip/>
+            <Legend/>
             <Line type="monotone" dataKey="minTemp" stroke="#8884d8"/>
             <Line type="monotone" dataKey="maxTemp" stroke="#82ca9d"/>
           </LineChart>
