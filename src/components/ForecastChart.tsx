@@ -30,17 +30,21 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
   }, [city.id, city.latitude, city.longitude])
   return (
     <>
+      <h4 className="mt-4">Forecast</h4>
       {hasError ? (
         <span className="text-danger">{errorMessage}</span>
       ) : (
-        <LineChart style={{width: '100%', aspectRatio: 1.618, maxWidth: 800, margin: 'auto'}} responsive
-                   data={chartData}>
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
-          <XAxis dataKey="date"/>
-          <YAxis width="auto"/>
-          <Line type="monotone" dataKey="minTemp" stroke="#8884d8"/>
-          <Line type="monotone" dataKey="maxTemp" stroke="#82ca9d"/>
-        </LineChart>
+        <div>
+          <hr/>
+          <LineChart style={{width: '100%', aspectRatio: 1.618}} responsive
+                     data={chartData}>
+            <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
+            <XAxis dataKey="date"/>
+            <YAxis width="auto"/>
+            <Line type="monotone" dataKey="minTemp" stroke="#8884d8"/>
+            <Line type="monotone" dataKey="maxTemp" stroke="#82ca9d"/>
+          </LineChart>
+        </div>
       )}
     </>
   )
