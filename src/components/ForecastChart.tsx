@@ -14,7 +14,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
       setErrorMessage('');
       setChartData([]);
       try {
-        const result = await getWeatherForecast(city.latitude, city.longitude)
+        const result = await getWeatherForecast(city.latitude, city.longitude, city.timezone)
         const weatherForecast = result.time.map((date: string, index: number) => ({
           date: new Date(date).toLocaleDateString('de-DE', {month: 'short', day: 'numeric'}),
           minTemp: result.temperature_2m_min[index],
@@ -27,7 +27,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
     }
 
     fetchWeatherForecast()
-  }, [city.id, city.latitude, city.longitude])
+  }, [city.id, city.latitude, city.longitude, city.timezone])
   return (
     <>
       <h4 className="mt-4">Forecast</h4>
