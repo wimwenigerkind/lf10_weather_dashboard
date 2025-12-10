@@ -1,4 +1,4 @@
-export async function searchCity(name: string, count = 5, language = "de", format = "json") {
+export async function searchCities(name: string, count = 5, language = "de", format = "json") {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=${count}&language=${language}&format=${format}`;
 
   const response = await fetch(url);

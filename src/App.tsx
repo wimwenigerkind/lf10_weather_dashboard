@@ -4,7 +4,7 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import ProfilePage from './pages/ProfilePage'
 import {useEffect, useState} from 'react'
-import {searchCity} from './services/geocodingService'
+import {searchCities} from './services/geocodingService'
 import {useDebounce} from './hooks/useDebounce'
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
       setSearchIsLoading(true);
       setErrorMessage('');
       try {
-        const result = await searchCity(debouncedSearchTerm);
+        const result = await searchCities(debouncedSearchTerm);
         setSearchResults(result);
       } catch (error) {
         setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
