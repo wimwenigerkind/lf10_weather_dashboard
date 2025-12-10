@@ -12,6 +12,7 @@ function App() {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSearchTermChange = (term: string) => {
     setSearchTerm(term);
@@ -22,14 +23,19 @@ function App() {
 
   useEffect(() => {
     if (debouncedSearchTerm.length < 3) {
+      setErrorMessage('');
       return;
     }
 
     const fetchCities = async () => {
       setSearchIsLoading(true);
+      setErrorMessage('');
       try {
         const result = await searchCity(debouncedSearchTerm);
         setSearchResults(result);
+      } catch (error) {
+        setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
+        setSearchResults([]);
       } finally {
         setSearchIsLoading(false);
       }
@@ -40,7 +46,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar setSearchTerm={handleSearchTermChange} searchIsLoading={searchIsLoading} searchResults={searchResults}/>
+      <NavBar setSearchTerm={handleSearchTermChange} searchIsLoading={searchIsLoading} searchResults={searchResults} errorMessage={errorMessage}/>
       <main className='container mt-3'>
         <Routes>
           <Route path='/' element={<HomePage/>}/>

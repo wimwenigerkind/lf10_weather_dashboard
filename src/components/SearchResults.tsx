@@ -4,14 +4,23 @@ import SearchResultItem from "./SearchResultItem.tsx";
 
 interface SearchResultsProps {
   searchResults: citySearchResult[]
+  errorMessage: string;
 }
 
-function SearchResults({searchResults}: SearchResultsProps) {
+function SearchResults({searchResults, errorMessage}: SearchResultsProps) {
   const showResults = searchResults.length > 0;
+  const showErrors = errorMessage.length > 0
 
   return (
     <>
       <div className="search--results">
+        {showErrors && (
+          <ListGroup>
+            <ListGroup.Item variant="danger">
+              {errorMessage}
+            </ListGroup.Item>
+          </ListGroup>
+        )}
         {showResults && (
           <ListGroup>
             {searchResults.map((city) => (

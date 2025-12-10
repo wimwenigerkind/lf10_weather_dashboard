@@ -7,9 +7,10 @@ interface NavBarProps {
   setSearchTerm: (value: string) => void;
   searchIsLoading: boolean;
   searchResults: citySearchResult[];
+  errorMessage: string;
 }
 
-function NavBar({setSearchTerm, searchIsLoading, searchResults}: NavBarProps) {
+function NavBar({setSearchTerm, searchIsLoading, searchResults, errorMessage}: NavBarProps) {
   return (
     <Navbar expand='lg' className="bg-body-tertiary">
       <Container>
@@ -20,7 +21,7 @@ function NavBar({setSearchTerm, searchIsLoading, searchResults}: NavBarProps) {
             <NavLink to="/about" className="nav-link">About</NavLink>
             <NavLink to="/profile" className="nav-link">Profile</NavLink>
           </Nav>
-          <SearchForm setSearchTerm={setSearchTerm} searchIsLoading={searchIsLoading} searchResults={searchResults}/>
+          <SearchForm setSearchTerm={setSearchTerm} searchIsLoading={searchIsLoading} searchResults={searchResults} errorMessage={errorMessage}/>
         </Navbar.Collapse>
       </Container>
     </Navbar>
