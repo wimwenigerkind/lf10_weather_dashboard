@@ -1,4 +1,5 @@
 import {Form, InputGroup, Spinner} from "react-bootstrap";
+import SearchResults from "./SearchResults.tsx";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 
 interface SearchFormProps {
@@ -27,6 +28,7 @@ function SearchForm({setSearchTerm, searchIsLoading, searchResults}: SearchFormP
                     )}
                 </InputGroup>
             </Form>
+            <SearchResults searchResults={searchResults} />
         </div>
     )
 }
