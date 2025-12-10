@@ -1,14 +1,47 @@
 import NavBar from './components/NavBar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import ProfilePage from './pages/ProfilePage'
+import {useEffect, useState} from 'react'
+import {searchCity} from './services/geocodingService'
+import {useDebounce} from './hooks/useDebounce'
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearchTermChange = (term: string) => {
+    setSearchTerm(term);
+    if (term.length < 3) {
+      setSearchResults([]);
+    }
+  };
+
+  useEffect(() => {
+    if (debouncedSearchTerm.length < 3) {
+      return;
+    }
+
+    const fetchCities = async () => {
+      setSearchIsLoading(true);
+      try {
+        const result = await searchCity(debouncedSearchTerm);
+        setSearchResults(result);
+      } finally {
+        setSearchIsLoading(false);
+      }
+    };
+
+    fetchCities();
+  }, [debouncedSearchTerm]);
+
   return (
     <BrowserRouter>
-      <NavBar/>
-      <main className='container'>
+      <NavBar setSearchTerm={handleSearchTermChange} searchIsLoading={searchIsLoading} searchResults={searchResults}/>
+      <main className='container mt-3'>
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/about' element={<AboutPage/>}/>
