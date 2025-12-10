@@ -1,4 +1,4 @@
-import {createContext, type ReactNode, useContext, useState} from "react";
+import {createContext, type ReactNode, useContext, useEffect, useState} from "react";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 
 type CityContextType = {
@@ -9,7 +9,16 @@ type CityContextType = {
 const CityContext = createContext<CityContextType | undefined>(undefined);
 
 export function CityProvider({children}: { children: ReactNode }) {
-  const [selectedCity, setSelectedCity] = useState<citySearchResult | undefined>(undefined);
+  const [selectedCity, setSelectedCity] = useState(() => {
+    const saved = localStorage.getItem('selectedCity');
+    return saved ? JSON.parse(saved) : undefined
+  });
+
+  useEffect(() => {
+    if (selectedCity) {
+      localStorage.setItem('selectedCity', JSON.stringify(selectedCity))
+    }
+  }, [selectedCity]);
 
   return (
     <CityContext.Provider value={{selectedCity, setSelectedCity}}>
