@@ -36,5 +36,3 @@ export function useCity() {
   }
   return context;
 }
-
-export default CityContext;
