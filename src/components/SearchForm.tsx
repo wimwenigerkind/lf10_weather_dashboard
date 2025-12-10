@@ -10,7 +10,6 @@ interface SearchFormProps {
 }
 
 function SearchForm({setSearchTerm, searchIsLoading, searchResults, errorMessage}: SearchFormProps) {
-  console.log(searchResults);
   return (
     <div style={{position: "relative"}}>
       <Form className="d-flex">
