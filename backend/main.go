@@ -80,6 +80,7 @@ func main() {
 			println("Redis error:", err.Error())
 			imageURL = imageSearch(query)
 		} else {
+			println("hit")
 			imageURL = val
 		}
 
