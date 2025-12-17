@@ -18,6 +18,11 @@ bun install
 bun dev
 ```
 
+### Lint code
+```shell
+bun lint
+```
+
 ---
 # React + TypeScript + Vite
 
