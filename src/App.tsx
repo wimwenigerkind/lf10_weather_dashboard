@@ -7,6 +7,7 @@ import {useEffect, useState} from 'react'
 import {searchCities} from './services/geocodingService'
 import {useDebounce} from './hooks/useDebounce'
 import CityDetailPage from "./pages/CityDetailPage.tsx";
+import {useToast} from "./hooks/useToast.ts";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,6 +15,7 @@ function App() {
   const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const {toast} = useToast();
 
   const handleSearchTermChange = (term: string) => {
     setSearchTerm(term);
@@ -36,6 +38,7 @@ function App() {
         setSearchResults(result);
       } catch (error) {
         setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
+        toast(error instanceof Error ? error.message : 'An error occurred', "danger")
         setSearchResults([]);
       } finally {
         setSearchIsLoading(false);
@@ -43,7 +46,7 @@ function App() {
     };
 
     fetchCities();
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, toast]);
 
   return (
     <BrowserRouter>
