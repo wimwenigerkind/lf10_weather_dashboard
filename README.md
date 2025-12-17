@@ -2,7 +2,7 @@
 
 A weather dashboard application built with React, TypeScript, and Vite.
 
-**Live Demo:** [lf10-weather-dashboard.wimdev.de](https://lf10-weather-dashboard.wimdev.de/)
+**Live Demo:** [lf10-weather-dashboard.wimdev.de](https://lf10-weather-dashboard.wimdev.de)
 
 This project uses [Bun](https://bun.sh/) as the package manager and runtime.
 
