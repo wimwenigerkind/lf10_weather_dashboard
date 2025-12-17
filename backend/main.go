@@ -35,6 +35,12 @@ func main() {
 	})
 	defer rdb.Close()
 
+	pong, err := rdb.Ping(ctx).Result()
+	if err != nil {
+		panic("Failed to connect to Redis: " + err.Error())
+	}
+	println("Successfully connected to Redis:", pong)
+
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"https://lf10-weather-dashboard.wimdev.de"},
@@ -83,7 +89,7 @@ func main() {
 		})
 	})
 
-	err := r.Run(cfg.Address)
+	err = r.Run(cfg.Address)
 	if err != nil {
 		panic(err)
 	}
