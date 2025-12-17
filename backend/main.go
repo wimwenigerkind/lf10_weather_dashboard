@@ -33,6 +33,7 @@ func main() {
 		Password: cfg.RedisConfig.Password,
 		DB:       cfg.RedisConfig.DB,
 	})
+	defer rdb.Close()
 
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
