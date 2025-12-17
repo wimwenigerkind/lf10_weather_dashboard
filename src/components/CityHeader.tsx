@@ -1,9 +1,13 @@
 import type {citySearchResult} from "../types/citySearchResult.ts";
+import FavoriteCityButton from "./FavoriteCityButton.tsx";
 
 export default function CityHeader({city}: { city: citySearchResult }) {
   return (
     <>
-      <h1>{city.name}</h1>
+      <div className="d-flex justify-content-between align-items-center">
+        <h1>{city.name}</h1>
+        <FavoriteCityButton city={city}/>
+      </div>
       <div className="mb-4 d-flex justify-content-between">
         <div className="row">
           <span>{city.country}, {city.country_code}</span>
