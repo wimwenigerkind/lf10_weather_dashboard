@@ -1,5 +1,5 @@
 export async function searchImage(query: string) {
-  const url = `http://localhost:8888/api/image/search?query=${encodeURIComponent(query)}`;
+  const url = `https://lf10-weather-dashboard.wimdev.de/api/image/search?query=${encodeURIComponent(query)}`;
 
   const response = await fetch(url);
   if (!response.ok) {
