@@ -28,6 +28,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
 
     fetchWeatherForecast()
   }, [city.id, city.latitude, city.longitude, city.timezone])
+
   return (
     <>
       <h4 className="mt-4">Forecast</h4>
@@ -42,7 +43,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
             <XAxis dataKey="date"/>
             <YAxis width="auto"/>
             <Tooltip
-              contentStyle={{ backgroundColor: 'white', border: '1px solid #ccc' }}
+              contentStyle={{backgroundColor: 'white', border: '1px solid #ccc'}}
               formatter={(value: number) => `${value}°C`}
             />
             <Legend/>
