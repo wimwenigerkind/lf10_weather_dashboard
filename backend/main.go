@@ -62,6 +62,7 @@ func main() {
 		val, err := rdb.Get(ctx, "unsplash:query:"+query).Result()
 		if errors.Is(err, redis.Nil) {
 			imageURL = imageSearch(query)
+			println("miss")
 			rdb.Set(ctx, "unsplash:query:"+query, imageURL, time.Hour*24)
 		} else if err != nil {
 			panic(err)
