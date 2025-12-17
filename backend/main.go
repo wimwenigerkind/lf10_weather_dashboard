@@ -1,17 +1,22 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/url"
 	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"github.com/wimwenigerkind/lf10_weather_dashboard/backend/internal/config"
 )
 
 var cfg config.Config
+var rdb *redis.Client
+var ctx = context.Background()
 
 type UnsplashResponse struct {
 	Results []struct {
@@ -23,6 +28,12 @@ type UnsplashResponse struct {
 
 func main() {
 	cfg = *config.LoadConfig()
+	rdb = redis.NewClient(&redis.Options{
+		Addr:     cfg.RedisConfig.Address,
+		Password: cfg.RedisConfig.Password,
+		DB:       cfg.RedisConfig.DB,
+	})
+
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"https://lf10-weather-dashboard.wimdev.de"},
@@ -47,7 +58,16 @@ func main() {
 			return
 		}
 
-		imageURL := imageSearch(query)
+		var imageURL string
+		val, err := rdb.Get(ctx, "unsplash:query:"+query).Result()
+		if errors.Is(err, redis.Nil) {
+			imageURL = imageSearch(query)
+			rdb.Set(ctx, "unsplash:query:"+query, imageURL, time.Hour*24)
+		} else if err != nil {
+			panic(err)
+		} else {
+			imageURL = val
+		}
 
 		if imageURL == "" {
 			c.JSON(500, gin.H{
