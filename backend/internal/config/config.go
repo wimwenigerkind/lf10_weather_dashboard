@@ -26,7 +26,7 @@ func LoadConfig() *Config {
 	}
 
 	return &Config{
-		Address: getEnv("ADDRESS", "127.0.0.1:8080"),
+		Address: getEnv("ADDRESS", "0.0.0.0:8080"),
 		ApiAuthConfig: ApiAuthConfig{
 			UnsplashAccessKey: getEnv("UNSPLASH_ACCESS_KEY", ""),
 		},
