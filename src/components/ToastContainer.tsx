@@ -17,7 +17,7 @@ export default function ToastContainer({items, hide}: {items: ToastMessageType[]
   };
 
   return (
-    <BSToastContainer position="top-end" className="p-3">
+    <BSToastContainer position="bottom-end" className="p-3">
       {items.map((t) => (
         <Toast
           key={t.id}
