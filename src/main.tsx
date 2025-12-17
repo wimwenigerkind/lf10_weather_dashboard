@@ -4,11 +4,14 @@ import App from './App.tsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css'
 import {CityProvider} from "./contexts/CityContext.tsx";
+import {ToastProvider} from "./contexts/ToastContext.tsx";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <CityProvider>
-      <App/>
+      <ToastProvider>
+        <App/>
+      </ToastProvider>
     </CityProvider>
   </StrictMode>,
 )
