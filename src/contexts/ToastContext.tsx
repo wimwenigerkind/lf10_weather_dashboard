@@ -1,4 +1,4 @@
-import {createContext, type ReactNode, useState} from "react";
+import {createContext, type ReactNode, useState, useCallback} from "react";
 import ToastContainer from "../components/ToastContainer.tsx";
 
 export type ToastMessageType = {
@@ -18,14 +18,15 @@ export {ToastContext}
 export function ToastProvider({children}: { children: ReactNode }) {
   const [items, setItems] = useState<ToastMessageType[]>([]);
 
-  const toast = (message: string, bg?: string) => {
+  const hide = useCallback((id: string) => {
+    setItems((t) => t.filter((x) => x.id !== id));
+  }, []);
+
+  const toast = useCallback((message: string, bg?: string) => {
     const id = crypto.randomUUID();
     setItems((t) => [...t, {id, message, bg}]);
     setTimeout(() => hide(id), 4000)
-  }
-
-  const hide = (id: string) =>
-    setItems((t) => t.filter((x) => x.id !== id));
+  }, [hide]);
   return (
     <ToastContext.Provider value={{toast}}>
       {children}
