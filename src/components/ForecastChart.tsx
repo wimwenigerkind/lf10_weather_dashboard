@@ -2,10 +2,12 @@ import {useEffect, useState} from "react";
 import {getWeatherForecast} from "../services/weatherService.ts";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
+import {useToast} from "../hooks/useToast.ts";
 
 export default function ForecastChart({city}: { city: citySearchResult }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [chartData, setChartData] = useState<Array<{ name: string, minTemp: number, maxTemp: number }>>([]);
+  const {toast} = useToast();
 
   const hasError = errorMessage.length > 0;
 
@@ -22,12 +24,13 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
         }));
         setChartData(weatherForecast);
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
+        const errMsg = error instanceof Error ? error.message : 'An error occurred';
+        setErrorMessage(errMsg);
+        toast(errMsg, "danger")
       }
     }
-
     fetchWeatherForecast()
-  }, [city.id, city.latitude, city.longitude, city.timezone])
+  }, [city.id, city.latitude, city.longitude, city.timezone, toast])
 
   return (
     <>

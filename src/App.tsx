@@ -37,8 +37,9 @@ function App() {
         const result = await searchCities(debouncedSearchTerm);
         setSearchResults(result);
       } catch (error) {
-        setErrorMessage(error instanceof Error ? error.message : 'An error occurred');
-        toast(error instanceof Error ? error.message : 'An error occurred', "danger")
+        const errMsg = error instanceof Error ? error.message : 'An error occurred';
+        setErrorMessage(errMsg);
+        toast(errMsg, "danger")
         setSearchResults([]);
       } finally {
         setSearchIsLoading(false);
