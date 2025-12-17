@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -8,8 +11,18 @@ import (
 	"github.com/wimwenigerkind/lf10_weather_dashboard/backend/internal/config"
 )
 
+var cfg config.Config
+
+type UnsplashResponse struct {
+	Results []struct {
+		URLs struct {
+			Raw string `json:"raw"`
+		} `json:"urls"`
+	} `json:"results"`
+}
+
 func main() {
-	cfg := config.LoadConfig()
+	cfg = *config.LoadConfig()
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"https://lf10-weather-dashboard.wimdev.de"},
@@ -25,8 +38,65 @@ func main() {
 		})
 	})
 
+	r.GET("/api/image/search", func(c *gin.Context) {
+		query := c.Query("query")
+		if query == "" {
+			c.JSON(400, gin.H{
+				"error": "no search query provided",
+			})
+			return
+		}
+
+		imageURL := imageSearch(query)
+
+		if imageURL == "" {
+			c.JSON(500, gin.H{
+				"error": "failed to fetch image",
+			})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"url": imageURL,
+		})
+	})
+
 	err := r.Run(cfg.Address)
 	if err != nil {
 		panic(err)
 	}
+}
+
+func imageSearch(query string) string {
+	apiURL := "https://api.unsplash.com/search/photos?query=" + url.QueryEscape(query)
+
+	req, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return ""
+	}
+
+	authHeader := "Client-ID " + cfg.ApiAuthConfig.UnsplashAccessKey
+	req.Header.Set("Authorization", authHeader)
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		return ""
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return ""
+	}
+
+	var unsplashResp UnsplashResponse
+	if err := json.NewDecoder(response.Body).Decode(&unsplashResp); err != nil {
+		return ""
+	}
+
+	if len(unsplashResp.Results) == 0 {
+		return ""
+	}
+
+	return unsplashResp.Results[0].URLs.Raw
 }

@@ -8,7 +8,12 @@ import (
 )
 
 type Config struct {
-	Address string
+	Address       string
+	ApiAuthConfig ApiAuthConfig
+}
+
+type ApiAuthConfig struct {
+	UnsplashAccessKey string
 }
 
 func LoadConfig() *Config {
@@ -22,6 +27,9 @@ func LoadConfig() *Config {
 
 	return &Config{
 		Address: getEnv("ADDRESS", "127.0.0.1:8080"),
+		ApiAuthConfig: ApiAuthConfig{
+			UnsplashAccessKey: getEnv("UNSPLASH_ACCESS_KEY", ""),
+		},
 	}
 }
 
