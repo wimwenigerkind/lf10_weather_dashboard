@@ -4,7 +4,6 @@ import {useFavoriteCities} from "../hooks/useFavoriteCities.ts";
 export default function FavoriteCityButton({city}: {city: citySearchResult}) {
   const {toggleFavoriteCity, isFavoriteCity} = useFavoriteCities()
 
-  console.log(city)
   return (
     <button className="border-0 bg-transparent" aria-label="mark as favorite" onClick={() => toggleFavoriteCity(city)}>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={isFavoriteCity(city.id) ? "red" : "black"} className="bi bi-suit-heart-fill" viewBox="0 0 16 16">
