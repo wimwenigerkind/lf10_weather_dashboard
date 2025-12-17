@@ -65,14 +65,20 @@ func main() {
 			return
 		}
 
+		timeoutCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+
 		var imageURL string
-		val, err := rdb.Get(ctx, "unsplash:query:"+query).Result()
+		val, err := rdb.Get(timeoutCtx, "unsplash:query:"+query).Result()
 		if errors.Is(err, redis.Nil) {
 			imageURL = imageSearch(query)
 			println("miss")
-			rdb.Set(ctx, "unsplash:query:"+query, imageURL, time.Hour*24)
+			if err := rdb.Set(timeoutCtx, "unsplash:query:"+query, imageURL, time.Hour*24).Err(); err != nil {
+				println("Failed to cache result:", err.Error())
+			}
 		} else if err != nil {
-			panic(err)
+			println("Redis error:", err.Error())
+			imageURL = imageSearch(query)
 		} else {
 			imageURL = val
 		}
