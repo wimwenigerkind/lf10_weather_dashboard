@@ -1,3 +1,24 @@
+# React Weather Dashboard LF10
+
+A weather dashboard application built with React, TypeScript, and Vite.
+
+**Live Demo:** [lf10-weather-dashboard.wimdev.de](https://lf10-weather-dashboard.wimdev.de/)
+
+This project uses [Bun](https://bun.sh/) as the package manager and runtime.
+
+## Getting Started
+
+### Install dependencies
+```shell
+bun install
+```
+
+### Start development server
+```shell
+bun dev
+```
+
+---
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
