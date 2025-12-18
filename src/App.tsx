@@ -8,6 +8,7 @@ import {searchCities} from './services/geocodingService'
 import {useDebounce} from './hooks/useDebounce'
 import CityDetailPage from "./pages/CityDetailPage.tsx";
 import {useToast} from "./hooks/useToast.ts";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -56,7 +57,11 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/about' element={<AboutPage/>}/>
-          <Route path='/profile' element={<ProfilePage/>}/>
+          <Route path='/profile' element={
+            <ProtectedRoute>
+              <ProfilePage/>
+            </ProtectedRoute>
+          }/>
           <Route path='/city/:id' element={<CityDetailPage/>}/>
         </Routes>
       </main>
