@@ -4,16 +4,23 @@ import {searchImage} from "../services/imageService.ts";
 import {Card} from "react-bootstrap";
 import {useCity} from "../hooks/useCity.ts";
 import FavoriteCityButton from "./FavoriteCityButton.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function CityCard({city}: {city: citySearchResult}) {
   const [imageUrl, setImageUrl] = useState<string>("");
   const {setSelectedCity} = useCity()
+  const navigate = useNavigate();
 
   useEffect(() => {
     searchImage(city.name).then(url => {
       setImageUrl(url);
     });
   }, [city.name]);
+
+  const selectCity = () => {
+    setSelectedCity(city);
+    navigate(`/city/${city.id}`);
+  }
 
   return (
     <Card>
@@ -31,7 +38,7 @@ export default function CityCard({city}: {city: citySearchResult}) {
         <Card.Text>{city.country}, {city.country_code}</Card.Text>
         <div className={"d-flex justify-content-between align-items-center"}>
           <FavoriteCityButton city={city}/>
-          <button onClick={() => setSelectedCity(city)} className="btn btn-primary">Select</button>
+          <button onClick={selectCity} className="btn btn-primary">Select</button>
         </div>
       </Card.Body>
     </Card>
