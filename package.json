@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.2.8",
+    "@react-keycloak/web": "^3.4.0",
     "bootstrap": "^5.3.8",
+    "keycloak-js": "^26.2.2",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
