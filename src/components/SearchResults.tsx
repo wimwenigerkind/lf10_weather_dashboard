@@ -10,20 +10,18 @@ interface SearchResultsProps {
 
 function SearchResults({searchResults, errorMessage}: SearchResultsProps) {
   const {setSelectedCity} = useCity()
-  const showResults = searchResults.length > 0;
-  const showErrors = errorMessage.length > 0
 
   return (
     <>
       <div className="search--results">
-        {showErrors && (
+        {errorMessage.length > 0 && (
           <ListGroup>
             <ListGroup.Item variant="danger">
               {errorMessage}
             </ListGroup.Item>
           </ListGroup>
         )}
-        {showResults && (
+        {searchResults.length > 0 && (
           <ListGroup>
             {searchResults.map((city) => (
               <ListGroup.Item key={city.id} action onClick={() => setSelectedCity(city)}>
