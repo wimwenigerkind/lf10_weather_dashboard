@@ -16,12 +16,20 @@ export default function CityCard({city}: {city: citySearchResult}) {
 
   return (
     <Card>
-      <img src={imageUrl} className="card-img-left" alt=""/>
-      <div className="card-body">
-        <h5 className="card-title">{city.name}</h5>
-        <p className="card-text">{city.country}, {city.country_code}</p>
+      <Card.Img
+        variant="top"
+        src={imageUrl}
+        alt={city.name}
+        style={{
+          height: '200px',
+          objectFit: 'cover'
+        }}
+      />
+      <Card.Body>
+        <Card.Title>{city.name}</Card.Title>
+        <Card.Text>{city.country}, {city.country_code}</Card.Text>
         <button onClick={() => setSelectedCity(city)} className="btn btn-primary">Select</button>
-      </div>
+      </Card.Body>
     </Card>
   )
 }
