@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getWeatherForecast} from "../services/weatherService.ts";
+import {getWeatherForecast, WeatherPeriod} from "../services/weatherService.ts";
 import type {citySearchResult} from "../types/citySearchResult.ts";
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from "recharts";
 import {useToast} from "../hooks/useToast.ts";
@@ -16,7 +16,7 @@ export default function ForecastChart({city}: { city: citySearchResult }) {
       setErrorMessage('');
       setChartData([]);
       try {
-        const result = await getWeatherForecast(city.latitude, city.longitude, city.timezone)
+        const result = await getWeatherForecast(city.latitude, city.longitude, city.timezone, WeatherPeriod.DAILY)
         const weatherForecast = result.time.map((date: string, index: number) => ({
           date: new Date(date).toLocaleDateString('de-DE', {month: 'short', day: 'numeric'}),
           minTemp: result.temperature_2m_min[index],
