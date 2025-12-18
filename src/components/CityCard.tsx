@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {searchImage} from "../services/imageService.ts";
 import {Card} from "react-bootstrap";
 import {useCity} from "../hooks/useCity.ts";
+import FavoriteCityButton from "./FavoriteCityButton.tsx";
 
 export default function CityCard({city}: {city: citySearchResult}) {
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -28,7 +29,10 @@ export default function CityCard({city}: {city: citySearchResult}) {
       <Card.Body>
         <Card.Title>{city.name}</Card.Title>
         <Card.Text>{city.country}, {city.country_code}</Card.Text>
-        <button onClick={() => setSelectedCity(city)} className="btn btn-primary">Select</button>
+        <div className={"d-flex justify-content-between align-items-center"}>
+          <FavoriteCityButton city={city}/>
+          <button onClick={() => setSelectedCity(city)} className="btn btn-primary">Select</button>
+        </div>
       </Card.Body>
     </Card>
   )
